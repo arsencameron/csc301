@@ -132,7 +132,7 @@ We played poker together online on discord.
 
 # Team Roles and Responsibilities
 
-| Person  | Technical Role | Non-Technical Role |
+| Person  | Technical Role  | Non-Technical Role |
 |---------|-----------------|------------------|
 | Arsen   | Project Manager | Partner Liaison |
 | Sean    | Front End       | Scrum Master / Meeting Head |
