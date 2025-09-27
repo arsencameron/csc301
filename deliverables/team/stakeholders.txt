@@ -1,0 +1,19 @@
+# Stakeholders Information
+
+## Partners
+
+### Primary Partner Contact
+Name: Yasiru Ratnayake
+Title: Mr
+Email: yasiru@amicacorp.net
+Notes: Developer we are meeting with regularly
+
+### Secondary Partner Contact
+Name: Henry Wu
+Title: Mr
+Email: henrymwu@me.com
+Notes: Executive director occasional contact
+
+## Teaching Assistant (TA)
+Name: Shikhar Jaiswal
+Email: jaiswal@cs.toronto.edu
