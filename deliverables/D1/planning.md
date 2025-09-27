@@ -123,7 +123,9 @@ We agreed to make the code public and shareable as an open source product with a
 2. Mondher fought in an amateur kickboxing fight this past Summer.
 3. Sergio Sanchez speaks 5 languages
 
-We 
+We played poker together online on discord.
+
+![screenshot of poker night](image.jpg "Optional Title Text")
 
 
 #### Q7: What are the roles & responsibilities on the team?
