@@ -1,0 +1,27 @@
+{
+  "name": "pulse-backend",
+  "version": "1.0.0",
+  "description": "Backend for Pulse – agentic system for demand planning",
+  "keywords": [
+    "agents",
+    "LLM",
+    "demand",
+    "prediction",
+    "webscraping"
+  ],
+  "homepage": "https://github.com/arsencameron/csc301#readme",
+  "bugs": {
+    "url": "https://github.com/arsencameron/csc301/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arsencameron/csc301.git"
+  },
+  "license": "MIT",
+  "author": "Pulse Team",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}

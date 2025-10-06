@@ -1,0 +1,25 @@
+{
+  "name": "agentlib",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Manik Fernando",
+  "license": "ISC",
+  "dependencies": {
+    "@google/genai": "^1.16.0",
+    "@modelcontextprotocol/sdk": "^1.18.2",
+    "dotenv": "^16.0.0",
+    "js-yaml": "^4.1.0",
+    "openai": "^5.16.0",
+    "playwright": "^1.55.0",
+    "prompt-sync": "^4.2.0",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.7",
+    "zod": "^3.25.76"
+  }
+}
