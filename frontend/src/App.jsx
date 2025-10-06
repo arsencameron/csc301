@@ -1,11 +1,13 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { Provider } from 'react-redux'
+import { store } from './store'
 import Dashboard from './pages/Dashboard'
 import Analytics from './pages/Analytics'
 import Map from './pages/Map'
 import Calendar from './pages/Calendar'
 
-// Simple layout without Redux
+// Simple layout
 const SimpleLayout = ({ children }) => (
   <div className="min-h-screen bg-background">
     <header className="border-b bg-card">
@@ -29,30 +31,32 @@ const SimpleLayout = ({ children }) => (
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={
-          <SimpleLayout>
-            <Dashboard />
-          </SimpleLayout>
-        } />
-        <Route path="/analytics" element={
-          <SimpleLayout>
-            <Analytics />
-          </SimpleLayout>
-        } />
-        <Route path="/map" element={
-          <SimpleLayout>
-            <Map />
-          </SimpleLayout>
-        } />
-        <Route path="/calendar" element={
-          <SimpleLayout>
-            <Calendar />
-          </SimpleLayout>
-        } />
-      </Routes>
-    </Router>
+    <Provider store={store}>
+      <Router>
+        <Routes>
+          <Route path="/" element={
+            <SimpleLayout>
+              <Dashboard />
+            </SimpleLayout>
+          } />
+          <Route path="/analytics" element={
+            <SimpleLayout>
+              <Analytics />
+            </SimpleLayout>
+          } />
+          <Route path="/map" element={
+            <SimpleLayout>
+              <Map />
+            </SimpleLayout>
+          } />
+          <Route path="/calendar" element={
+            <SimpleLayout>
+              <Calendar />
+            </SimpleLayout>
+          } />
+        </Routes>
+      </Router>
+    </Provider>
   )
 }
 

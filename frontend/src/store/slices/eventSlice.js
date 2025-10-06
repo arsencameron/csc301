@@ -1,7 +1,9 @@
-import { createSlice } from '@reduxjs/toolkit'
-
 const initialState = {
-  events: [],
+  events: [
+    { id: 1, name: 'Summer Music Festival', date: '2024-01-15', type: 'Concert', impact: 'High' },
+    { id: 2, name: 'Tech Conference', date: '2024-01-20', type: 'Conference', impact: 'Medium' },
+    { id: 3, name: 'Sports Championship', date: '2024-01-25', type: 'Sports', impact: 'High' },
+  ],
   selectedEvent: null,
   filters: {
     type: 'all',
@@ -12,38 +14,47 @@ const initialState = {
   error: null,
 }
 
-const eventSlice = createSlice({
-  name: 'events',
-  initialState,
-  reducers: {
-    setEvents: (state, action) => {
-      state.events = action.payload
-    },
-    setSelectedEvent: (state, action) => {
-      state.selectedEvent = action.payload
-    },
-    setFilters: (state, action) => {
-      state.filters = { ...state.filters, ...action.payload }
-    },
-    setLoading: (state, action) => {
-      state.loading = action.payload
-    },
-    setError: (state, action) => {
-      state.error = action.payload
-    },
-  },
+const eventReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case 'events/setEvents':
+      return { ...state, events: action.payload }
+    case 'events/setSelectedEvent':
+      return { ...state, selectedEvent: action.payload }
+    case 'events/setFilters':
+      return { ...state, filters: { ...state.filters, ...action.payload } }
+    case 'events/setLoading':
+      return { ...state, loading: action.payload }
+    case 'events/setError':
+      return { ...state, error: action.payload }
+    default:
+      return state
+  }
+}
+
+// Action creators
+export const setEvents = (events) => ({
+  type: 'events/setEvents',
+  payload: events
 })
 
-export const { 
-  setEvents, 
-  setSelectedEvent, 
-  setFilters, 
-  setLoading, 
-  setError 
-} = eventSlice.actions
+export const setSelectedEvent = (event) => ({
+  type: 'events/setSelectedEvent',
+  payload: event
+})
 
-export default eventSlice.reducer
-```
+export const setFilters = (filters) => ({
+  type: 'events/setFilters',
+  payload: filters
+})
 
-```
+export const setLoading = (loading) => ({
+  type: 'events/setLoading',
+  payload: loading
+})
 
+export const setError = (error) => ({
+  type: 'events/setError',
+  payload: error
+})
+
+export default eventReducer

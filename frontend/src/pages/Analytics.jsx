@@ -1,18 +1,18 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { setSearchQuery } from '../store/slices/locationSlice'
+import { setFilters } from '../store/slices/eventSlice'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
 import { Button } from '../components/ui/button'
 import { Input } from '../components/ui/input'
 import { Search } from 'lucide-react'
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 
 const Analytics = () => {
-  const [searchQuery, setSearchQuery] = useState('')
-
-  // Mock data
-  const mockEvents = [
-    { id: 1, name: 'Summer Music Festival', date: '2024-01-15', type: 'Concert', impact: 'High' },
-    { id: 2, name: 'Tech Conference', date: '2024-01-20', type: 'Conference', impact: 'Medium' },
-    { id: 3, name: 'Sports Championship', date: '2024-01-25', type: 'Sports', impact: 'High' },
-  ]
+  const dispatch = useDispatch()
+  const { searchQuery } = useSelector((state) => state.location)
+  const { events, filters } = useSelector((state) => state.events)
+  const { timeSeriesData, statistics } = useSelector((state) => state.analytics)
 
   return (
     <div className="space-y-6">
@@ -30,7 +30,7 @@ const Analytics = () => {
               <Input
                 placeholder="Search for a location..."
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e) => dispatch(setSearchQuery(e.target.value))}
                 className="pl-10"
               />
             </div>
@@ -39,14 +39,36 @@ const Analytics = () => {
         </CardContent>
       </Card>
 
-      {/* Time Series Chart Placeholder */}
+      {/* Time Series Chart */}
       <Card>
         <CardHeader>
           <CardTitle>Time Series Chart</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="h-96 bg-muted rounded-lg flex items-center justify-center">
-            <p className="text-muted-foreground">Chart will be displayed here</p>
+          <div className="h-96">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={timeSeriesData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="date" />
+                <YAxis yAxisId="left" />
+                <YAxis yAxisId="right" orientation="right" />
+                <Tooltip />
+                <Line
+                  yAxisId="left"
+                  type="monotone"
+                  dataKey="demand"
+                  stroke="#8884d8"
+                  strokeWidth={2}
+                />
+                <Line
+                  yAxisId="right"
+                  type="monotone"
+                  dataKey="expenditure"
+                  stroke="#82ca9d"
+                  strokeWidth={2}
+                />
+              </LineChart>
+            </ResponsiveContainer>
           </div>
         </CardContent>
       </Card>
@@ -63,15 +85,15 @@ const Analytics = () => {
               <p className="text-sm text-muted-foreground">Average Demand</p>
             </div>
             <div className="text-center">
-              <p className="text-2xl font-bold">$2.4M</p>
+              <p className="text-2xl font-bold">${(statistics.totalSpend / 1000000).toFixed(1)}M</p>
               <p className="text-sm text-muted-foreground">Total Expenditure</p>
             </div>
             <div className="text-center">
-              <p className="text-2xl font-bold text-green-600">+12%</p>
+              <p className="text-2xl font-bold text-green-600">+{statistics.growth}%</p>
               <p className="text-sm text-muted-foreground">Growth Rate</p>
             </div>
             <div className="text-center">
-              <p className="text-2xl font-bold">15</p>
+              <p className="text-2xl font-bold">{events.length}</p>
               <p className="text-sm text-muted-foreground">Total Events</p>
             </div>
           </div>
@@ -95,7 +117,7 @@ const Analytics = () => {
                 </tr>
               </thead>
               <tbody>
-                {mockEvents.map((event) => (
+                {events.map((event) => (
                   <tr key={event.id} className="border-b">
                     <td className="p-2">{event.name}</td>
                     <td className="p-2">{event.date}</td>

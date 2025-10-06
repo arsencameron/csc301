@@ -1,12 +1,21 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 
 const Dashboard = () => {
-  // Mock data instead of Redux
-  const favouriteLocations = [
-    { id: 1, name: 'Montreal', nextEvent: 'Concert', forecast: '+16%' },
-    { id: 2, name: 'Boston', nextEvent: 'Festival', forecast: '-2%' },
-    { id: 3, name: 'Toronto', nextEvent: 'Sports', forecast: '+7%' }
+  const { favouriteLocations } = useSelector((state) => state.location)
+  const { weeklyDemand, statistics } = useSelector((state) => state.analytics)
+
+  // Prepare chart data
+  const chartData = [
+    { name: 'Mon', demand: weeklyDemand[0] },
+    { name: 'Tue', demand: weeklyDemand[1] },
+    { name: 'Wed', demand: weeklyDemand[2] },
+    { name: 'Thu', demand: weeklyDemand[3] },
+    { name: 'Fri', demand: weeklyDemand[4] },
+    { name: 'Sat', demand: weeklyDemand[5] },
+    { name: 'Sun', demand: weeklyDemand[6] },
   ]
 
   return (
@@ -60,7 +69,7 @@ const Dashboard = () => {
                   <div>Sun</div>
                 </div>
                 <div className="grid grid-cols-7 gap-2">
-                  {[85, 92, 78, 95, 88, 76, 82].map((demand, index) => (
+                  {weeklyDemand.map((demand, index) => (
                     <div
                       key={index}
                       className="bg-muted rounded p-2 text-center text-sm"
@@ -86,20 +95,33 @@ const Dashboard = () => {
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <p className="text-sm text-muted-foreground">Total Revenue</p>
-                    <p className="text-2xl font-bold">$2.4M</p>
+                    <p className="text-2xl font-bold">${(statistics.totalSpend / 1000000).toFixed(1)}M</p>
                   </div>
                   <div>
                     <p className="text-sm text-muted-foreground">Average</p>
-                    <p className="text-2xl font-bold">$342K</p>
+                    <p className="text-2xl font-bold">${(statistics.average / 1000).toFixed(0)}K</p>
                   </div>
                   <div>
                     <p className="text-sm text-muted-foreground">Growth</p>
-                    <p className="text-2xl font-bold text-green-600">+12%</p>
+                    <p className="text-2xl font-bold text-green-600">+{statistics.growth}%</p>
                   </div>
                   <div>
                     <p className="text-sm text-muted-foreground">Forecasted</p>
-                    <p className="text-2xl font-bold">$2.7M</p>
+                    <p className="text-2xl font-bold">${(statistics.forecasted / 1000000).toFixed(1)}M</p>
                   </div>
+                </div>
+                
+                {/* Chart */}
+                <div className="h-64">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart data={chartData}>
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="name" />
+                      <YAxis />
+                      <Tooltip />
+                      <Bar dataKey="demand" fill="#8884d8" />
+                    </BarChart>
+                  </ResponsiveContainer>
                 </div>
               </div>
             </CardContent>
